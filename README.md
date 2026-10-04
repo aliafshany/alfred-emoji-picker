@@ -36,7 +36,9 @@ The script asks for the Raycast passphrase and writes `seed.json` into Alfred's 
 | Tab | Add the selected emoji to the basket and keep Alfred open |
 | Return on **Paste** | Paste every emoji in the basket |
 | Return on the emoji just added with Tab | Paste the basket once, without appending that emoji again |
-| empty query | Your most-used emoji |
+| Option-Return | Pin the emoji to the top of the empty picker, or unpin it |
+| Control-Return | Move a pinned emoji up one place (pins it if it isn't pinned) |
+| empty query | Pinned emoji first, then your most-used |
 
 Emoji characters at the start of the query are the basket. Tab appends the highlighted emoji and leaves the window open. A **Paste** row stays on top. Its result id changes with the basket, so the highlight comes back to **Paste** after each Tab.
 
@@ -46,7 +48,7 @@ The `emoji` Script Filter reads `emojis.json` and ranks matches against the Unic
 
 An exact custom keyword ranks first, then an exact name, then a name prefix, then other keyword hits. Recent and repeated use adds a frecency bonus.
 
-Return runs `record.py`, which stores a count and a timestamp in `$alfred_workflow_data/usage.json`, then copies the text to the clipboard. Return pastes it. Command-Return only copies. Both clipboard writes are transient.
+Return runs `record.py`, which stores a count and a timestamp for every emoji in the pasted text in `$alfred_workflow_data/usage.json`, then copies the text to the clipboard. Return pastes it. Command-Return only copies. Both clipboard writes are transient.
 
 `emojis.json` stores up to five skin-tone variants on each emoji that has them (`t`: light, medium-light, medium, medium-dark, dark). The `skin_tone` setting picks one when the list is drawn. The file's `seed` and `custom` objects are empty. Per-user data loads from `$alfred_workflow_data/seed.json` when that file exists:
 
@@ -66,6 +68,8 @@ bash tools/package.sh
 ```
 
 `tools/build_data.py` downloads `emoji-test.txt` and the English and Persian CLDR annotation files, then writes `workflow/emojis.json`. `tools/package.sh` zips the workflow folder into `dist/Emoji Picker.alfredworkflow`.
+
+Pins live in `$alfred_workflow_data/pins.json` as an ordered list of base emoji. Option-Return and Control-Return update it and reopen the picker on the same query.
 
 ## Privacy
 

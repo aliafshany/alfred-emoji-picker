@@ -8,6 +8,19 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>04B1993F-461D-412B-8A5E-3714D9CE18F4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>2376CD27-9692-42D5-99B3-BEFF56EFB12D</key>
 		<array>
 			<dict>
@@ -38,6 +51,26 @@
 				<string>B5AF8CB4-58E8-4E8F-849B-3682551891A6</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
@@ -82,12 +115,6 @@
 	<key>objects</key>
 	<array>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>version</key>
-			<integer>2</integer>
-			<key>uid</key>
-			<string>2376CD27-9692-42D5-99B3-BEFF56EFB12D</string>
 			<key>config</key>
 			<dict>
 				<key>action</key>
@@ -111,14 +138,14 @@
 				<key>relatedAppsMode</key>
 				<integer>0</integer>
 			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>2376CD27-9692-42D5-99B3-BEFF56EFB12D</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>version</key>
-			<integer>3</integer>
-			<key>uid</key>
-			<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
@@ -160,37 +187,37 @@
 				<key>withspace</key>
 				<true/>
 			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python3 ./record.py "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
-			<key>version</key>
-			<integer>2</integer>
 			<key>uid</key>
 			<string>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</string>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>/usr/bin/python3 ./record.py "$1"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
 			<key>version</key>
 			<integer>2</integer>
-			<key>uid</key>
-			<string>B5AF8CB4-58E8-4E8F-849B-3682551891A6</string>
+		</dict>
+		<dict>
 			<key>config</key>
 			<dict>
 				<key>concurrently</key>
@@ -206,14 +233,14 @@
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>B5AF8CB4-58E8-4E8F-849B-3682551891A6</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>version</key>
-			<integer>3</integer>
-			<key>uid</key>
-			<string>11DAC701-EFD4-4C74-A4CE-49B0CC2269CC</string>
 			<key>config</key>
 			<dict>
 				<key>autopaste</key>
@@ -225,14 +252,14 @@
 				<key>transient</key>
 				<true/>
 			</dict>
-		</dict>
-		<dict>
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>11DAC701-EFD4-4C74-A4CE-49B0CC2269CC</string>
 			<key>version</key>
 			<integer>3</integer>
-			<key>uid</key>
-			<string>B79F00BD-C91B-4640-A578-228B48118BF4</string>
+		</dict>
+		<dict>
 			<key>config</key>
 			<dict>
 				<key>autopaste</key>
@@ -244,12 +271,79 @@
 				<key>transient</key>
 				<true/>
 			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>B79F00BD-C91B-4640-A578-228B48118BF4</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python3 ./pin.py "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>sleep 0.25
+osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfred" to search ("emoji " &amp; item 1 of argv)' -e 'end run' "$q"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string>Keyword emoji, or the Hotkey after you set one. Double-click the Hotkey and tap Control twice for a double-tap Control shortcut. Return pastes, Command-Return copies, Tab adds to the basket. An empty query lists your most-used emoji. Skin tone is in Configure Workflow.</string>
 	<key>uidata</key>
 	<dict>
+		<key>04B1993F-461D-412B-8A5E-3714D9CE18F4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>430</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+		<key>11DAC701-EFD4-4C74-A4CE-49B0CC2269CC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>680</integer>
+			<key>ypos</key>
+			<integer>30</integer>
+		</dict>
 		<key>2376CD27-9692-42D5-99B3-BEFF56EFB12D</key>
 		<dict>
 			<key>xpos</key>
@@ -271,12 +365,12 @@
 			<key>ypos</key>
 			<integer>30</integer>
 		</dict>
-		<key>11DAC701-EFD4-4C74-A4CE-49B0CC2269CC</key>
+		<key>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</key>
 		<dict>
 			<key>xpos</key>
-			<integer>680</integer>
+			<integer>630</integer>
 			<key>ypos</key>
-			<integer>30</integer>
+			<integer>320</integer>
 		</dict>
 		<key>B5AF8CB4-58E8-4E8F-849B-3682551891A6</key>
 		<dict>

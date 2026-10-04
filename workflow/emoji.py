@@ -198,10 +198,26 @@ def ensure_icons():
 POPULAR = "😂 ❤️ 🤣 👍 😭 🙏 😘 🥰 😍 😊 🎉 😁 🥺 😅 🔥 🤦 🤷 🙄 😆 🤗 😉 🤔 👏 🙂 😳 🥳 😎 👌 💪 ✨ 👀 😏 😢 💯 🙌 😡 😜 🙈".split()
 
 
+def load_pins():
+    try:
+        with open(os.path.join(data_dir(), "pins.json"), encoding="utf-8") as handle:
+            pins = json.load(handle)
+    except (OSError, ValueError):
+        return []
+    return [p for p in pins if isinstance(p, str)] if isinstance(pins, list) else []
+
+
+PINS = load_pins()
+RAW = ""  # the full query, so ⌥↩/⌃↩ can reopen the picker where you were
+
+
 def item(entry):
     entry = with_skin(entry)
     keywords = [k for k in (CUSTOM.get(entry["b"], []) + entry["k"]) if k.lower() != entry["n"].lower()][:6]
     subtitle = ", ".join(keywords) if keywords else entry["g"]
+    pinned = entry["b"] in PINS
+    if pinned:
+        subtitle = "📌 " + subtitle
     # Return pastes exactly the basket when the highlight sits on the emoji just added with Tab.
     # Picking a different emoji and pressing Return appends it.
     out = BASKET if BASKET and LAST in (entry["e"], entry["b"]) else BASKET + entry["e"]
@@ -221,7 +237,17 @@ def item(entry):
                 "arg": out,
                 "subtitle": "Copy only (no paste)",
                 "variables": {"base": entry["b"]},
-            }
+            },
+            "alt": {
+                "arg": entry["b"],
+                "subtitle": "Unpin" if pinned else "📌 Pin to the top",
+                "variables": {"q": RAW, "pinop": "toggle"},
+            },
+            "ctrl": {
+                "arg": entry["b"],
+                "subtitle": "Move up among pinned" if pinned else "📌 Pin to the top",
+                "variables": {"q": RAW, "pinop": "up"},
+            },
         },
     }
 
@@ -250,16 +276,18 @@ def basket_row():
 
 
 def main():
-    global BASKET, REST, LAST
-    BASKET, REST = split_basket(" ".join(sys.argv[1:]).strip())
+    global BASKET, REST, LAST, RAW
+    RAW = " ".join(sys.argv[1:]).strip()
+    BASKET, REST = split_basket(RAW)
     LAST = last_of(BASKET)
     ensure_icons()
     query = REST.lower()
     usage = load_usage()
     now = time.time()
     if not query:
-        ranked = sorted(
-            (base for base in set(SEED) | set(usage) if base in BY_BASE),
+        pinned = [base for base in PINS if base in BY_BASE]
+        ranked = pinned + sorted(
+            (base for base in set(SEED) | set(usage) if base in BY_BASE and base not in pinned),
             key=lambda base: -frecency(base, usage, now),
         )
         if len(ranked) < 12:  # new install: pad with popular emoji
@@ -272,6 +300,7 @@ def main():
             score = match(entry, query, qwords)
             if score:
                 boost = min(40.0, 8.0 * math.log1p(frecency(entry["b"], usage, now)))
+                boost += 30.0 if entry["b"] in PINS else 0.0
                 scored.append((score + boost, -index, entry))
         scored.sort(key=lambda row: (row[0], row[1]), reverse=True)
         items = [item(entry) for _, _, entry in scored[:MAX_RESULTS]]
