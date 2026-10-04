@@ -12,7 +12,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(HERE, "emojis.json"), encoding="utf-8") as handle:
     DATA = json.load(handle)
 EMOJIS = DATA["emojis"]
-BY_BASE = {e["b"]: e for e in EMOJIS}
+
+
+def build_index(entries):
+    """First entry for a base wins, so the emoji-presentation form (FE0F) beats its text twin.
+    uid is unique per entry: a later twin gets a codepoint suffix."""
+    by_base = {}
+    seen = set()
+    for entry in entries:
+        by_base.setdefault(entry["b"], entry)
+        uid = entry["b"]
+        if uid in seen:
+            uid = entry["b"] + "|" + "-".join("%x" % ord(ch) for ch in entry["e"])
+        seen.add(uid)
+        entry["_uid"] = uid
+    return by_base
+
+
+BY_BASE = build_index(EMOJIS)
 MAX_RESULTS = 60
 BUNDLE = "com.aliafshany.emoji-picker"
 SKIN = re.compile("[\U0001F3FB-\U0001F3FF\uFE0F]")
@@ -187,7 +204,8 @@ def ensure_icons():
         for entry in EMOJIS:
             glyph = with_skin(entry)["e"]
             f.write(f"{icon_stem(glyph)}\t{'s' if entry['g'] == 'Symbols' else 'e'}\t{glyph}\n")
-    script = '[ -x "$1" ] || xcrun swiftc -O "$2" -o "$1" || exit 0; "$1" "$3" < "$4" && touch "$5"; rm -f "$6"'
+    # Rebuild when the binary is missing or older than render_icons.swift.
+    script = '[ -x "$1" ] && [ "$1" -nt "$2" ] || xcrun swiftc -O "$2" -o "$1" || exit 0; "$1" "$3" < "$4" && touch "$5"; rm -f "$6"'
     subprocess.Popen(
         ["/bin/sh", "-c", script, "sh", os.path.join(CACHE, "render_icons"),
          os.path.join(HERE, "render_icons.swift"), ICON_DIR, listing, done, lock],
@@ -225,7 +243,8 @@ def item(entry):
     return {
         **icon,
         # uid changes with the basket so Alfred re-highlights the Paste row after each Tab
-        "uid": f"{entry['b']}|{len(BASKET)}" if BASKET else entry["b"],
+        "uid": (f"{entry.get('_uid', entry['b'])}|{len(BASKET)}" if BASKET
+                else entry.get("_uid", entry["b"])),
         "title": entry["n"] if icon else f"{entry['e']}   {entry['n']}",
         "subtitle": subtitle,
         "arg": out,
