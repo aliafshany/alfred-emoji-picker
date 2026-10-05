@@ -25,7 +25,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
+				<string>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -90,11 +90,49 @@
 				<false/>
 			</dict>
 		</array>
+		<key>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>C4E8A1B2-7D63-4A15-8F90-1B2C3D4E5F60</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B5AF8CB4-58E8-4E8F-849B-3682551891A6</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>B79F00BD-C91B-4640-A578-228B48118BF4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -325,6 +363,71 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:view}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>grid</string>
+						<key>outputlabel</key>
+						<string>Grid</string>
+						<key>uid</key>
+						<string>C4E8A1B2-7D63-4A15-8F90-1B2C3D4E5F60</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>List</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>8</integer>
+				<key>filterable</key>
+				<true/>
+				<key>fixedorder</key>
+				<true/>
+				<key>imageaspect</key>
+				<integer>2</integer>
+				<key>inputfile</key>
+				<string>./grid.py</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string>Loading emoji…</string>
+				<key>showsubtitles</key>
+				<false/>
+				<key>showtitles</key>
+				<false/>
+				<key>subtitlesinfooter</key>
+				<false/>
+				<key>titlesinfooter</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Keyword emoji, or the Hotkey after you set one. Double-click the Hotkey and tap Control twice for a double-tap Control shortcut. Return pastes, Command-Return copies, Tab adds to the basket. An empty query lists your most-used emoji. Skin tone is in Configure Workflow.</string>
@@ -372,6 +475,13 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>ypos</key>
 			<integer>320</integer>
 		</dict>
+		<key>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>120</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
 		<key>B5AF8CB4-58E8-4E8F-849B-3682551891A6</key>
 		<dict>
 			<key>xpos</key>
@@ -385,6 +495,13 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<integer>680</integer>
 			<key>ypos</key>
 			<integer>180</integer>
+		</dict>
+		<key>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</key>
+		<dict>
+			<key>xpos</key>
+			<integer>330</integer>
+			<key>ypos</key>
+			<integer>230</integer>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
@@ -431,16 +548,44 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>variable</key>
 			<string>skin_tone</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>grid</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Grid</string>
+						<string>grid</string>
+					</array>
+					<array>
+						<string>List</string>
+						<string>list</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>The double-tap hotkey opens this view. The emoji keyword always opens the list.</string>
+			<key>label</key>
+			<string>Hotkey opens</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>view</string>
+		</dict>
 	</array>
 	<key>variables</key>
 	<dict>
 		<key>skin_tone</key>
 		<string>none</string>
+		<key>view</key>
+		<string>grid</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.0</string>
+	<string>1.1.0</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

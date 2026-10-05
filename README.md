@@ -14,6 +14,8 @@ The Hotkey trigger ships with no shortcut. Alfred strips hotkeys on import.
 2. Double-click the Hotkey object.
 3. Tap Control twice. That assigns a double-tap Control hotkey.
 
+**Hotkey opens** chooses what that hotkey shows. Grid is an icon grid, eight columns, with the name in the footer and a field that filters as you type. List is the text list. The default is Grid. Return in the grid pastes. Copy, the Tab basket, and pinning stay on the list. The keyword `emoji` always opens the list.
+
 Skin tone is a workflow setting. Open **Configure Workflow…** and set **Skin tone** to None, Light, Medium-Light, Medium, Medium-Dark, or Dark. None keeps the yellow emoji.
 
 To bring over frecency and custom keywords from a Raycast 2 export:
@@ -29,7 +31,8 @@ The script asks for the Raycast passphrase and writes `seed.json` into Alfred's 
 
 | Key | Action |
 | --- | --- |
-| `emoji` | Open the picker |
+| `emoji` | Open the list |
+| double-tap hotkey | Open whichever view **Hotkey opens** is set to |
 | type | Search names and keywords, in English or Persian |
 | Return | Paste into the frontmost app |
 | Command-Return | Copy only |
@@ -44,7 +47,7 @@ Emoji characters at the start of the query are the basket. Tab appends the highl
 
 ## How it works
 
-The `emoji` Script Filter reads `emojis.json` and ranks matches against the Unicode name, English and Persian CLDR keywords, and a fixed set of symbols: arrows, punctuation, currency (including ﷼), and the Mac keys ⌘ ⌥ ⇧ ⌃ and their usual aliases (`cmd`, `opt`, `shift`, `ctrl`, and so on).
+The `emoji` Script Filter reads `emojis.json` and ranks matches against the Unicode name, English and Persian CLDR keywords, and a fixed set of symbols: arrows, punctuation, currency (including ﷼), and the Mac keys ⌘ ⌥ ⇧ ⌃ and their usual aliases (`cmd`, `opt`, `shift`, `ctrl`, and so on). The hotkey's Grid view runs `grid.py`, which prints the whole set, pins first, and Alfred filters it. Return in the grid follows the same paste path as Return in the list.
 
 An exact custom keyword ranks first, then an exact name, then a name prefix, then other keyword hits. Recent and repeated use adds a frecency bonus.
 
@@ -88,6 +91,8 @@ Search and paste stay on this Mac. Usage and an optional `seed.json` stay in Alf
 ## Data
 
 Emoji characters and the names in `emoji-test.txt` come from the Unicode Consortium. English and Persian keywords come from Unicode CLDR annotations and derived annotations. Both are used under the [Unicode License v3](https://www.unicode.org/license.txt).
+
+Extra slang tags (`lmao`, `rofl`, and others) come from [iAli/emoji-search-workflow](https://github.com/iAli/emoji-search-workflow), Copyright (c) 2026 iAli, MIT License. `tools/merge_tags.py` merges them into `emojis.json`.
 
 ## License
 
