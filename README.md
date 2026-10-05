@@ -61,7 +61,7 @@ Return runs `record.py`, which stores a count and a timestamp for every emoji in
 
 Keys are the base emoji, with no skin tone and no variation selector. `seed` maps a base emoji to a number. `custom` maps a base emoji to a list of extra keywords.
 
-Row icons are drawn once with Apple's emoji font. On first use, `emoji.py` compiles `render_icons.swift` with `xcrun swiftc` and renders a 128 px PNG per emoji into Alfred's workflow cache folder. That takes about 10 seconds in the background and about 27 MB, and happens again if you change the skin tone. Without the Xcode Command Line Tools the icons are skipped and each row shows the emoji in its title instead.
+Row icons are drawn once with Apple's emoji font. On first use, `emoji.py` compiles `render_icons.swift` with `xcrun swiftc` and renders a 128 px PNG per emoji into Alfred's workflow cache folder. That takes about 10 seconds in the background and about 27 MB, and happens again if you change the skin tone. Text symbols (→ ⌘ € ﷼) follow your Alfred theme: dark ink on a light theme, light ink on a dark one. Each set is drawn the first time that theme is used. Without the Xcode Command Line Tools the icons are skipped and each row shows the emoji in its title instead.
 
 Rebuild the data file and the workflow archive with:
 

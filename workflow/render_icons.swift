@@ -1,5 +1,6 @@
 // Renders emoji/symbol icons for the Alfred emoji picker.
-// stdin lines: "<file-stem>\t<kind e|s>\t<text>"; writes <outdir>/<file-stem>.png (128×128), skipping existing files.
+// stdin lines: "<file-stem>\t<kind>\t<text>"; writes <outdir>/<file-stem>.png (128×128), skipping existing files.
+// kind: e = colour emoji, s = symbol for a dark theme (light ink), S = symbol for a light theme (dark ink).
 // Build: swiftc -O render_icons.swift -o render_icons
 import AppKit
 
@@ -7,7 +8,8 @@ let outDir = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "."
 let side: CGFloat = 128
 let emojiFont = NSFont(name: "Apple Color Emoji", size: 100) ?? NSFont.systemFont(ofSize: 100)
 let symbolFont = NSFont.systemFont(ofSize: 96, weight: .medium)
-let symbolColor = NSColor(white: 0.86, alpha: 1)  // readable on dark Alfred themes
+let lightInk = NSColor(white: 0.86, alpha: 1)  // on dark Alfred themes
+let darkInk = NSColor(white: 0.28, alpha: 1)   // on light Alfred themes
 
 try? FileManager.default.createDirectory(atPath: outDir, withIntermediateDirectories: true)
 
@@ -16,9 +18,9 @@ while let line = readLine() {
     guard parts.count == 3 else { continue }
     let path = outDir + "/" + parts[0] + ".png"
     if FileManager.default.fileExists(atPath: path) { continue }
-    let attrs: [NSAttributedString.Key: Any] = parts[1] == "s"
-        ? [.font: symbolFont, .foregroundColor: symbolColor]
-        : [.font: emojiFont]
+    let attrs: [NSAttributedString.Key: Any] = parts[1] == "e"
+        ? [.font: emojiFont]
+        : [.font: symbolFont, .foregroundColor: parts[1] == "S" ? darkInk : lightInk]
     let text = NSAttributedString(string: parts[2], attributes: attrs)
     guard let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(side), pixelsHigh: Int(side),
                                      bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,

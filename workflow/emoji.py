@@ -176,12 +176,26 @@ CACHE = os.environ.get("alfred_workflow_cache") or os.path.expanduser(
 ICON_DIR = os.path.join(CACHE, "icons")
 
 
+def light_theme():
+    """Alfred passes the theme background as rgba(r,g,b,a). A light theme needs dark symbols."""
+    m = re.match(r"rgba?\((\d+),\s*(\d+),\s*(\d+)", os.environ.get("alfred_theme_background", ""))
+    return bool(m) and 0.299 * int(m[1]) + 0.587 * int(m[2]) + 0.114 * int(m[3]) > 128
+
+
+THEME = "light" if light_theme() else "dark"
+SYMBOL_DIR = os.path.join(ICON_DIR, "symbols-" + THEME)   # text symbols are drawn per theme
+
+
 def icon_stem(glyph):
     return "-".join("%x" % ord(c) for c in glyph)
 
 
+SYMBOL_STEMS = {icon_stem(e["e"]) for e in EMOJIS if e["g"] == "Symbols"}
+
+
 def icon_for(glyph):
-    path = os.path.join(ICON_DIR, icon_stem(glyph) + ".png")
+    stem = icon_stem(glyph)
+    path = os.path.join(SYMBOL_DIR if stem in SYMBOL_STEMS else ICON_DIR, stem + ".png")
     return {"icon": {"path": path}} if os.path.exists(path) else {}
 
 
@@ -189,7 +203,7 @@ def ensure_icons():
     """Render emoji icons once, in the background, for the current skin tone.
     Needs swiftc (Xcode Command Line Tools); without it rows simply keep the emoji in the title."""
     tone = (os.environ.get("skin_tone") or "none").strip().lower()
-    done = os.path.join(ICON_DIR, f".done-{tone}")
+    done = os.path.join(ICON_DIR, f".done-{tone}-{THEME}")
     lock = os.path.join(CACHE, "icons.lock")
     if os.path.exists(done):
         return
@@ -198,12 +212,15 @@ def ensure_icons():
             return
     except OSError:
         pass
-    os.makedirs(ICON_DIR, exist_ok=True)
+    os.makedirs(SYMBOL_DIR, exist_ok=True)
     listing = os.path.join(CACHE, "icons.list")
     with open(lock, "w"), open(listing, "w", encoding="utf-8") as f:
         for entry in EMOJIS:
             glyph = with_skin(entry)["e"]
-            f.write(f"{icon_stem(glyph)}\t{'s' if entry['g'] == 'Symbols' else 'e'}\t{glyph}\n")
+            if entry["g"] == "Symbols":   # "S" = dark ink for a light theme, "s" = light ink
+                f.write(f"symbols-{THEME}/{icon_stem(glyph)}\t{'S' if THEME == 'light' else 's'}\t{glyph}\n")
+            else:
+                f.write(f"{icon_stem(glyph)}\te\t{glyph}\n")
     # Rebuild when the binary is missing or older than render_icons.swift.
     script = '[ -x "$1" ] && [ "$1" -nt "$2" ] || xcrun swiftc -O "$2" -o "$1" || exit 0; "$1" "$3" < "$4" && touch "$5"; rm -f "$6"'
     subprocess.Popen(
