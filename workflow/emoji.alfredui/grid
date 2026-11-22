@@ -1,0 +1,172 @@
+#!/usr/bin/python3
+"""Emoji grid panel backend (Alfred 6, Alfred UI). PREVIEW next to the row picker.
+
+argv: mode, text, [emoji, name, basket]
+  search  empty: recent/pinned emoji tinted on top, then all 2,035 in category order;
+          typed: run emoji.py (frecency, pins, Persian keywords) and fill the grid
+  name    show the selected emoji's name and keywords in the footer
+  type    the search box changed: a typed Tab adds the selected emoji to the basket, a Return pastes,
+          anything else searches (a textfield keeps Tab for focus, a textarea inserts it)
+  add     ⌘B: append the selected emoji to the basket
+  pin     ⌘P: pin / unpin the selected emoji (pins lead the empty grid); pinup ⌘U / pindown ⌘D: move it one place
+  act     ↩: paste the basket (plus nothing else) when it has emoji, else the selected one
+"""
+import json
+import os
+import subprocess
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+WF = os.path.dirname(HERE)
+
+
+def items(query):
+    r = subprocess.run(["/usr/bin/python3", "-I", os.path.join(WF, "emoji.py"), query],
+                       capture_output=True, timeout=10, cwd=WF, env=dict(os.environ, EMOJI_NO_ICONS="1"))
+    return json.loads(r.stdout.decode("utf-8")).get("items", [])
+
+
+RECENT = 20  # two full rows of the 10-column grid
+CACHE = os.environ.get("alfred_workflow_cache") or os.path.expanduser(
+    "~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/com.aliafshany.emoji-picker")
+
+
+def unsupported():
+    """Emoji this Mac draws as the "?" box (newer than its emoji font). Checked once per macOS
+    build by emoji_support.swift (Core Text, LastResort font); the answer is cached."""
+    import hashlib
+    import platform
+    src = os.path.join(WF, "emoji_support.swift")
+    data = os.path.join(WF, "emojis.json")
+    key = hashlib.sha1(("%s|%s|%s|%s" % (os.uname().version, platform.mac_ver()[0], os.path.getmtime(data),
+                                         os.path.getmtime(src))).encode()).hexdigest()[:12]
+    path = os.path.join(CACHE, "unsupported-%s.txt" % key)
+    try:
+        with open(path, encoding="utf-8") as f:
+            return set(f.read().split("\n"))
+    except OSError:
+        pass
+    try:
+        os.makedirs(CACHE, exist_ok=True)
+        binary = os.path.join(CACHE, "emoji_support")
+        if not os.path.exists(binary) or os.path.getmtime(binary) < os.path.getmtime(src):
+            subprocess.run(["/usr/bin/swiftc", "-O", "-o", binary, src], capture_output=True, timeout=120)
+        with open(data, encoding="utf-8") as f:
+            entries = json.load(f)["emojis"]
+        glyphs = []
+        for entry in entries:
+            glyphs += [entry["e"]] + list(entry.get("t") or [])
+        r = subprocess.run([binary], input="\n".join(glyphs).encode("utf-8"), capture_output=True, timeout=60)
+        if r.returncode != 0:
+            return set()
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(r.stdout.decode("utf-8").strip())
+        os.replace(tmp, path)
+        with open(path, encoding="utf-8") as f:
+            return set(f.read().split("\n"))
+    except Exception:  # never break the panel over this
+        return set()
+TINT = "#8080802E"
+PIN_TINT = "#F2B53A4D"  # pins get an amber tint so the pin group is visible
+
+
+def everything():
+    """Empty search: recent + pinned emoji (tinted, two rows), then every emoji in category order."""
+    sys.dont_write_bytecode = True  # keep __pycache__ out of the workflow folder
+    sys.path.insert(0, WF)
+    import emoji as engine
+    rows = []
+    for it in items("")[:RECENT]:
+        if not it.get("arg") or it.get("valid") is False:
+            continue
+        title = it.get("title", "")
+        name = title.split("   ", 1)[1] if "   " in title else title
+        base = (it.get("variables") or {}).get("base") or it["arg"]
+        pinned = (it.get("subtitle") or "").startswith("📌")
+        rows.append({"uid": "r:" + it["arg"], "glyph.text": it["arg"], "emoji": it["arg"], "name": name + ("  ·  📌 pinned" if pinned else "  ·  recent"),
+                     "base": base, "cell.background": PIN_TINT if pinned else TINT})
+    with open(os.path.join(WF, "emojis.json"), encoding="utf-8") as f:
+        entries = json.load(f)["emojis"]
+    hidden = unsupported()
+    for entry in entries:
+        shown = engine.with_skin(entry)
+        if shown["e"] in hidden:
+            continue
+        rows.append({"uid": "a:" + shown["e"], "glyph.text": shown["e"], "emoji": shown["e"], "base": entry["b"],
+                     "name": "%s  ·  %s" % (entry.get("n", ""), entry.get("g", ""))})
+    return rows
+
+
+def main():
+    mode = sys.argv[1] if len(sys.argv) > 1 else "search"
+    text = sys.argv[2] if len(sys.argv) > 2 else ""
+    if text == "(null)":  # what Alfred passes for an empty argument
+        text = ""
+    emoji, name, basket = (sys.argv[3:6] + [""] * 3)[:3]
+    if mode == "type":  # the search box is a textarea, so Tab and Return arrive as characters
+        if "\t" in text or "\n" in text:
+            clean = text.replace("\t", "").replace("\n", "")
+            if "\n" in text:
+                out = basket or emoji
+                print(json.dumps({"finish": {"args": out, "variables": {"action": "paste"}}} if out else
+                                 {"update": {"ids": {"q": {"text": clean}}}}, ensure_ascii=False))
+                return
+            ids = {"q": {"text": clean}}
+            if emoji:
+                ids["basket"] = {"text": basket + emoji}
+            print(json.dumps({"update": {"ids": ids}, "functions": {"ids": {"q": "caretend"}}}, ensure_ascii=False))
+            return
+        mode = "search"
+    keep = None  # the cell to select after a redraw
+    if mode in ("pin", "pinup", "pindown"):  # ⌘P pin / unpin, ⌘U / ⌘D move a pin; then redraw the grid
+        base = sys.argv[6] if len(sys.argv) > 6 else emoji
+        if base:
+            env = dict(os.environ, pinop={"pinup": "up", "pindown": "down"}.get(mode, "toggle"))
+            subprocess.run(["/usr/bin/python3", "-I", os.path.join(WF, "pin.py"), base], cwd=WF, env=env, timeout=5)
+            keep = emoji
+        mode = "search"
+    if mode == "name":
+        print(json.dumps({"update": {"ids": {"sel": {"text": "%s  %s" % (emoji, name)}}}}, ensure_ascii=False))
+        return
+    if mode == "add":
+        if emoji:
+            print(json.dumps({"update": {"ids": {"basket": {"text": basket + emoji}}}}, ensure_ascii=False))
+        else:
+            print("{}")
+        return
+    if mode == "act":
+        out = basket or emoji
+        if out:
+            print(json.dumps({"finish": {"args": out, "variables": {"action": text or "paste"}}}, ensure_ascii=False))
+        else:
+            print("{}")
+        return
+    rows = []
+    if not text.strip():
+        rows = everything()
+    hidden = set() if rows else unsupported()
+    for it in ([] if rows else items(text)):
+        if not it.get("arg") or it.get("valid") is False or it["arg"] in hidden:
+            continue
+        title = it.get("title", "")
+        label = title.split("   ", 1)[1] if "   " in title else title
+        base = (it.get("variables") or {}).get("base") or it["arg"]
+        rows.append({"uid": "s:" + it["arg"], "glyph.text": it["arg"], "emoji": it["arg"], "name": label, "base": base})
+    with open(os.path.join(HERE, "components", "grid.json")) as f:
+        view = json.load(f)
+    view["data"]["src"] = rows
+    if keep:
+        uid = next((r["uid"] for r in rows if r["emoji"] == keep), None)
+        if uid:
+            view["select"] = uid
+    out = {"replace": {"ids": {"grid": view}},
+           "update": {"ids": {"sel": {"text": "%s  %s" % (rows[0]["emoji"], rows[0]["name"]) if rows else "No emoji match"}}}}
+    if mode == "launch":
+        out["update"]["ids"]["q"] = {"text": text}
+        out["functions"] = {"ids": {"q": "caretend"}}
+    print(json.dumps(out, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

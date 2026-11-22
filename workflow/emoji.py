@@ -316,7 +316,8 @@ def main():
     RAW = " ".join(sys.argv[1:]).strip()
     BASKET, REST = split_basket(RAW)
     LAST = last_of(BASKET)
-    ensure_icons()
+    if not os.environ.get("EMOJI_NO_ICONS"):  # the Alfred UI grid draws emoji as text
+        ensure_icons()
     query = REST.lower()
     usage = load_usage()
     now = time.time()

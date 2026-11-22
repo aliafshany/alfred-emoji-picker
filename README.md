@@ -1,6 +1,8 @@
 # Emoji Picker
 
-Alfred workflow to search Unicode emoji and paste or copy the one you want. Each row shows the emoji as a large icon, Tab stacks several emoji without closing Alfred, and the list learns which ones you use.
+Alfred workflow to search Unicode emoji and paste or copy the one you want. It opens a native Alfred UI grid: your pinned and recent emoji on top, then every emoji, with Tab stacking several before you paste. It learns which ones you use.
+
+> **Version 2 needs Alfred 6.** It is built on Alfred UI, which Alfred 5 doesn't have. On Alfred 5, use [v1.1.0](https://github.com/aliafshany/alfred-emoji-picker/releases/tag/v1.1.0).
 
 ## Install
 
@@ -13,8 +15,6 @@ The Hotkey trigger ships with no shortcut. Alfred strips hotkeys on import.
 1. Open the workflow in Alfred Preferences.
 2. Double-click the Hotkey object.
 3. Tap Control twice. That assigns a double-tap Control hotkey.
-
-**Hotkey opens** chooses what that hotkey shows. Grid is an icon grid, eight columns, with the name in the footer and a field that filters as you type. List is the text list. The default is Grid. Return in the grid pastes. Copy, the Tab basket, and pinning stay on the list. The keyword `emoji` always opens the list.
 
 Skin tone is a workflow setting. Open **Configure Workflow…** and set **Skin tone** to None, Light, Medium-Light, Medium, Medium-Dark, or Dark. None keeps the yellow emoji.
 
@@ -31,23 +31,27 @@ The script asks for the Raycast passphrase and writes `seed.json` into Alfred's 
 
 | Key | Action |
 | --- | --- |
-| `emoji` | Open the list |
-| double-tap hotkey | Open whichever view **Hotkey opens** is set to |
+| `emoji` or the double-tap hotkey | Open the grid |
 | type | Search names and keywords, in English or Persian |
-| Return | Paste into the frontmost app |
+| arrow keys | Move around the grid; the footer names the selected emoji and its group |
+| Return | Paste into the frontmost app (the basket, when it has emoji) |
+| Tab | Add the selected emoji to the basket, top right |
+| Command-B | Add to the basket, same as Tab |
+| Command-Delete | Empty the basket |
 | Command-Return | Copy only |
-| Tab | Add the selected emoji to the basket and keep Alfred open |
-| Return on **Paste** | Paste every emoji in the basket |
-| Return on the emoji just added with Tab | Paste the basket once, without appending that emoji again |
-| Option-Return | Pin the emoji to the top of the empty picker, or unpin it |
-| Control-Return | Move a pinned emoji up one place (pins it if it isn't pinned) |
-| empty query | Pinned emoji first, then your most-used |
+| Command-P | Pin the selected emoji, or unpin it |
+| Command-U / Command-D | Move a pinned emoji one place earlier / later |
+| empty search | Pinned emoji (amber), then your most-used (grey): two rows; below them every emoji in Unicode order |
 
-Emoji characters at the start of the query are the basket. Tab appends the highlighted emoji and leaves the window open. A **Paste** row stays on top. Its result id changes with the basket, so the highlight comes back to **Paste** after each Tab.
+Emoji your version of macOS can't draw yet (newer than its emoji font) are left out, so the grid never shows a "?" box. The check runs once per macOS build.
 
 ## How it works
 
-The `emoji` Script Filter reads `emojis.json` and ranks matches against the Unicode name, English and Persian CLDR keywords, and a fixed set of symbols: arrows, punctuation, currency (including ﷼), and the Mac keys ⌘ ⌥ ⇧ ⌃ and their usual aliases (`cmd`, `opt`, `shift`, `ctrl`, and so on). The hotkey's Grid view runs `grid.py`, which prints the whole set, pins first, and Alfred filters it. Return in the grid follows the same paste path as Return in the list.
+The panel lives in `emoji.alfredui`. Its backend, `emoji.alfredui/grid`, runs `emoji.py` for every search. `emoji.py` reads `emojis.json` and ranks matches against the Unicode name, English and Persian CLDR keywords, and a fixed set of symbols: arrows, punctuation, currency (including ﷼), and the Mac keys ⌘ ⌥ ⇧ ⌃ and their usual aliases (`cmd`, `opt`, `shift`, `ctrl`, and so on). With an empty search the backend shows the pins and most-used first, then all of `emojis.json`.
+
+The search box is a one-line text area rather than a text field, because a text field keeps Tab for moving focus. In a text area Tab arrives as a character, which the backend turns into "add to basket"; Return arrives the same way and pastes.
+
+`emoji_support.swift` lists the emoji that Core Text can only draw with the LastResort font (the "?" box). The backend compiles it with `swiftc` into Alfred's workflow cache and caches its answer per macOS build.
 
 An exact custom keyword ranks first, then an exact name, then a name prefix, then other keyword hits. Recent and repeated use adds a frecency bonus.
 
@@ -61,8 +65,6 @@ Return runs `record.py`, which stores a count and a timestamp for every emoji in
 
 Keys are the base emoji, with no skin tone and no variation selector. `seed` maps a base emoji to a number. `custom` maps a base emoji to a list of extra keywords.
 
-Row icons are drawn once with Apple's emoji font. On first use, `emoji.py` compiles `render_icons.swift` with `xcrun swiftc` and renders a 128 px PNG per emoji into Alfred's workflow cache folder. That takes about 10 seconds in the background and about 27 MB, and happens again if you change the skin tone. Text symbols (→ ⌘ € ﷼) follow your Alfred theme: dark ink on a light theme, light ink on a dark one. Each set is drawn the first time that theme is used. Without the Xcode Command Line Tools the icons are skipped and each row shows the emoji in its title instead.
-
 Rebuild the data file and the workflow archive with:
 
 ```bash
@@ -72,7 +74,7 @@ bash tools/package.sh
 
 `tools/build_data.py` downloads `emoji-test.txt` and the English and Persian CLDR annotation files, then writes `workflow/emojis.json`. `tools/package.sh` zips the workflow folder into `dist/Emoji Picker.alfredworkflow`.
 
-Pins live in `$alfred_workflow_data/pins.json` as an ordered list of base emoji. Option-Return and Control-Return update it and reopen the picker on the same query.
+Pins live in `$alfred_workflow_data/pins.json` as an ordered list of base emoji. Command-P, Command-U and Command-D update it and redraw the grid with the same emoji selected.
 
 ## Privacy
 
@@ -82,10 +84,10 @@ Search and paste stay on this Mac. Usage and an optional `seed.json` stay in Alf
 
 ## Requirements
 
-- Alfred 5 with the Powerpack
+- Alfred 6 with the Powerpack (Alfred UI)
 - macOS
 - `/usr/bin/python3`
-- Xcode Command Line Tools (`xcode-select --install`), optional, for the large emoji icons
+- Xcode Command Line Tools (`xcode-select --install`), for the check that hides emoji your Mac can't draw; without them every emoji is listed
 - `pip3 install cryptography`, only if you run the Raycast importer
 
 ## Data

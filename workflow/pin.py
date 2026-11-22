@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Pin, unpin, or move up a pinned emoji. Pinned emoji sit at the top of the empty picker, in pin order.
-pinop=toggle (⌥↩): pin or unpin.  pinop=up (⌃↩): move a pinned emoji up one place, or pin it."""
+pinop=toggle (⌥↩): pin or unpin.  pinop=up / down: move a pinned emoji one place, or pin it."""
 import json
 import os
 import sys
@@ -27,6 +27,10 @@ if base:
         i = pins.index(base)
         if i > 0:
             pins[i - 1], pins[i] = pins[i], pins[i - 1]
+    elif op == "down":
+        i = pins.index(base)
+        if i < len(pins) - 1:
+            pins[i + 1], pins[i] = pins[i], pins[i + 1]
     else:
         pins.remove(base)
     os.makedirs(directory, exist_ok=True)

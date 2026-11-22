@@ -1,0 +1,311 @@
+{
+ "bundleid": "com.aliafshany.emoji-picker.ui",
+ "log": {
+  "level": "info",
+  "internal": true
+ },
+ "variablesconfig": {
+  "input_query": {
+   "src": "args[0]"
+  }
+ },
+ "colours": {
+  "card": "#8080801A",
+  "field": "#8080802E"
+ },
+ "window": {
+  "title": "Emoji",
+  "movablebybackground": true,
+  "size": {
+   "width": 720,
+   "height": 470
+  },
+  "padding": 0,
+  "root": {
+   "id": "root",
+   "type": "view",
+   "layout": "flex",
+   "padding": 14,
+   "background": "windowBackgroundColor",
+   "rows": 3,
+   "cols": 1,
+   "spacing": 10,
+   "events": [
+    {
+     "triggers": "launched",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "launch",
+       "{var:input_query}"
+      ],
+      "async": true
+     }
+    }
+   ],
+   "shortcuts": [
+    {
+     "shortcut": "↑",
+     "action": {
+      "type": "function",
+      "src": "grid",
+      "args": "selectup"
+     }
+    },
+    {
+     "shortcut": "↓",
+     "action": {
+      "type": "function",
+      "src": "grid",
+      "args": "selectdown"
+     }
+    },
+    {
+     "shortcut": "←",
+     "action": {
+      "type": "function",
+      "src": "grid",
+      "args": "selectleft"
+     }
+    },
+    {
+     "shortcut": "→",
+     "action": {
+      "type": "function",
+      "src": "grid",
+      "args": "selectright"
+     }
+    },
+    {
+     "shortcut": "⌘B",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "add",
+       "",
+       "{value:grid.selected.emoji}",
+       "{value:grid.selected.name}",
+       "{value:basket.text}"
+      ],
+      "async": true
+     }
+    },
+    {
+     "shortcut": "⌘⌫",
+     "action": {
+      "type": "json",
+      "src": {
+       "update": {
+        "ids": {
+         "basket": {
+          "text": ""
+         }
+        }
+       }
+      }
+     }
+    },
+    {
+     "shortcut": "⌘↩",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "act",
+       "copy",
+       "{value:grid.selected.emoji}",
+       "{value:grid.selected.name}",
+       "{value:basket.text}"
+      ],
+      "async": true
+     }
+    },
+    {
+     "shortcut": "⌘P",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "pin",
+       "{value:q.text}",
+       "{value:grid.selected.emoji}",
+       "{value:grid.selected.name}",
+       "{value:basket.text}",
+       "{value:grid.selected.base}"
+      ],
+      "async": true
+     }
+    },
+    {
+     "shortcut": "⌘U",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "pinup",
+       "{value:q.text}",
+       "{value:grid.selected.emoji}",
+       "{value:grid.selected.name}",
+       "{value:basket.text}",
+       "{value:grid.selected.base}"
+      ],
+      "async": true
+     }
+    },
+    {
+     "shortcut": "⌘D",
+     "action": {
+      "type": "script",
+      "src": "grid",
+      "args": [
+       "pindown",
+       "{value:q.text}",
+       "{value:grid.selected.emoji}",
+       "{value:grid.selected.name}",
+       "{value:basket.text}",
+       "{value:grid.selected.base}"
+      ],
+      "async": true
+     }
+    }
+   ],
+   "components": [
+    {
+     "constraints": {
+      "grid": {
+       "row": 0,
+       "col": 0
+      }
+     },
+     "type": "view",
+     "layout": "border",
+     "spacing": 8,
+     "components": [
+      {
+       "constraints": {
+        "region": "centre",
+        "size": {
+         "height": 38
+        }
+       },
+       "id": "q",
+       "type": "textarea",
+       "text": "",
+       "focus": true,
+       "font": {
+        "size": 18
+       },
+       "background": "field",
+       "textinsets": {
+        "horizontal": 8,
+        "vertical": 7
+       },
+       "events": [
+        {
+         "triggers": "changed",
+         "action": {
+          "type": "script",
+          "src": "grid",
+          "args": [
+           "type",
+           "{value:self.text}",
+           "{value:grid.selected.emoji}",
+           "{value:grid.selected.name}",
+           "{value:basket.text}"
+          ],
+          "async": true
+         }
+        }
+       ]
+      },
+      {
+       "constraints": {
+        "region": "right",
+        "size": {
+         "width": 150
+        }
+       },
+       "type": "view",
+       "layout": "border",
+       "padding": 8,
+       "background": "field",
+       "cornerradius": 6,
+       "components": [
+        {
+         "constraints": {
+          "region": "centre"
+         },
+         "id": "basket",
+         "type": "label",
+         "text": "",
+         "font": {
+          "size": 18
+         },
+         "linebreak": "truncatehead"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "constraints": {
+      "grid": {
+       "row": 1,
+       "col": 0,
+       "rowweight": 1.0
+      }
+     },
+     "type": "view",
+     "layout": "border",
+     "padding": 6,
+     "background": "card",
+     "cornerradius": 10,
+     "components": [
+      "{file:components/grid.json}"
+     ]
+    },
+    {
+     "constraints": {
+      "grid": {
+       "row": 2,
+       "col": 0
+      }
+     },
+     "type": "view",
+     "layout": "border",
+     "components": [
+      {
+       "constraints": {
+        "region": "left",
+        "size": {
+         "width": 230
+        }
+       },
+       "id": "sel",
+       "type": "label",
+       "text": "",
+       "font": {
+        "size": 13
+       },
+       "linebreak": "truncatetail"
+      },
+      {
+       "constraints": {
+        "region": "right"
+       },
+       "type": "label",
+       "text": "↩ paste  ·  ⇥ basket  ·  ⌘⌫ clear  ·  ⌘↩ copy  ·  ⌘P pin",
+       "colour": "secondaryLabelColor",
+       "font": {
+        "size": 11
+       },
+       "linebreak": "truncatetail"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

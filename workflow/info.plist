@@ -8,11 +8,23 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>04B1993F-461D-412B-8A5E-3714D9CE18F4</key>
+		<key>221B79B1-839B-4B75-8B85-71C17DC3990F</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</string>
+				<string>B5AF8CB4-58E8-4E8F-849B-3682551891A6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>D443E155-871F-44D5-BF05-B2D6F7C81F8D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -25,7 +37,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</string>
+				<string>9A6EF034-90F0-43E0-BB75-CF076943AEAA</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -34,43 +46,13 @@
 				<false/>
 			</dict>
 		</array>
-		<key>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</key>
+		<key>59C3AC56-A556-4D77-9F65-B5E37FF56DFD</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</string>
+				<string>9A6EF034-90F0-43E0-BB75-CF076943AEAA</string>
 				<key>modifiers</key>
 				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>B5AF8CB4-58E8-4E8F-849B-3682551891A6</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
-				<key>modifiers</key>
-				<integer>524288</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
-				<key>modifiers</key>
-				<integer>262144</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
@@ -90,23 +72,24 @@
 				<false/>
 			</dict>
 		</array>
-		<key>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</key>
+		<key>9A6EF034-90F0-43E0-BB75-CF076943AEAA</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</string>
+				<string>DFA97AE9-3379-4F26-A8DF-651ADBF2A14D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
-				<key>sourceoutputuid</key>
-				<string>C4E8A1B2-7D63-4A15-8F90-1B2C3D4E5F60</string>
 				<key>vitoclose</key>
-				<false/>
+				<true/>
 			</dict>
+		</array>
+		<key>A9DAF2A8-21D8-4158-AC94-E27F1767958F</key>
+		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
+				<string>9A6EF034-90F0-43E0-BB75-CF076943AEAA</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -128,11 +111,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</key>
+		<key>DFA97AE9-3379-4F26-A8DF-651ADBF2A14D</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</string>
+				<string>221B79B1-839B-4B75-8B85-71C17DC3990F</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -182,55 +165,6 @@
 			<string>2376CD27-9692-42D5-99B3-BEFF56EFB12D</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>emoji</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>2</integer>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>script</key>
-				<string>/usr/bin/python3 ./emoji.py "$1"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search emoji (↩ paste, ⌘↩ copy, ⇥ basket)</string>
-				<key>title</key>
-				<string>Emoji</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</string>
-			<key>version</key>
-			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -319,49 +253,68 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>/usr/bin/python3 ./pin.py "$1"</string>
-				<key>scriptargtype</key>
+				<key>argumenttype</key>
 				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
+				<key>keyword</key>
+				<string>emoji</string>
+				<key>subtext</key>
+				<string>Grid · ⇥ basket · ↩ paste · ⌘P pin</string>
+				<key>text</key>
+				<string>Emoji</string>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>04B1993F-461D-412B-8A5E-3714D9CE18F4</string>
+			<string>A9DAF2A8-21D8-4158-AC94-E27F1767958F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<true/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>sleep 0.25
-osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfred" to search ("emoji " &amp; item 1 of argv)' -e 'end run' "$q"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
+				<key>availableviaurlhandler</key>
+				<false/>
+				<key>triggerid</key>
+				<string>panel</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</string>
+			<string>59C3AC56-A556-4D77-9F65-B5E37FF56DFD</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>launchmode</key>
+				<integer>0</integer>
+				<key>path</key>
+				<string>emoji.alfredui</string>
+				<key>stackview</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.alfredui</string>
+			<key>uid</key>
+			<string>9A6EF034-90F0-43E0-BB75-CF076943AEAA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>unstackview</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>DFA97AE9-3379-4F26-A8DF-651ADBF2A14D</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -370,61 +323,28 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 				<array>
 					<dict>
 						<key>inputstring</key>
-						<string>{var:view}</string>
+						<string>{var:action}</string>
 						<key>matchcasesensitive</key>
-						<false/>
+						<true/>
 						<key>matchmode</key>
 						<integer>0</integer>
 						<key>matchstring</key>
-						<string>grid</string>
+						<string>copy</string>
 						<key>outputlabel</key>
-						<string>Grid</string>
+						<string>Copy</string>
 						<key>uid</key>
-						<string>C4E8A1B2-7D63-4A15-8F90-1B2C3D4E5F60</string>
+						<string>D443E155-871F-44D5-BF05-B2D6F7C81F8D</string>
 					</dict>
 				</array>
 				<key>elselabel</key>
-				<string>List</string>
+				<string>Paste</string>
 				<key>hideelse</key>
 				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
-			<string>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>columncount</key>
-				<integer>8</integer>
-				<key>filterable</key>
-				<true/>
-				<key>fixedorder</key>
-				<true/>
-				<key>imageaspect</key>
-				<integer>2</integer>
-				<key>inputfile</key>
-				<string>./grid.py</string>
-				<key>inputtype</key>
-				<integer>1</integer>
-				<key>loadingtext</key>
-				<string>Loading emoji…</string>
-				<key>showsubtitles</key>
-				<false/>
-				<key>showtitles</key>
-				<false/>
-				<key>subtitlesinfooter</key>
-				<false/>
-				<key>titlesinfooter</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.userinterface.grid</string>
-			<key>uid</key>
-			<string>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</string>
+			<string>221B79B1-839B-4B75-8B85-71C17DC3990F</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -433,19 +353,19 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 	<string>Keyword emoji, or the Hotkey after you set one. Double-click the Hotkey and tap Control twice for a double-tap Control shortcut. Return pastes, Command-Return copies, Tab adds to the basket. An empty query lists your most-used emoji. Skin tone is in Configure Workflow.</string>
 	<key>uidata</key>
 	<dict>
-		<key>04B1993F-461D-412B-8A5E-3714D9CE18F4</key>
-		<dict>
-			<key>xpos</key>
-			<integer>430</integer>
-			<key>ypos</key>
-			<integer>320</integer>
-		</dict>
 		<key>11DAC701-EFD4-4C74-A4CE-49B0CC2269CC</key>
 		<dict>
 			<key>xpos</key>
 			<integer>680</integer>
 			<key>ypos</key>
 			<integer>30</integer>
+		</dict>
+		<key>221B79B1-839B-4B75-8B85-71C17DC3990F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>80</integer>
 		</dict>
 		<key>2376CD27-9692-42D5-99B3-BEFF56EFB12D</key>
 		<dict>
@@ -454,12 +374,12 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>ypos</key>
 			<integer>80</integer>
 		</dict>
-		<key>3C8D3ED3-DC26-4389-B6D1-C4CCC1CE4F7D</key>
+		<key>59C3AC56-A556-4D77-9F65-B5E37FF56DFD</key>
 		<dict>
 			<key>xpos</key>
-			<integer>230</integer>
+			<integer>30</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>140</integer>
 		</dict>
 		<key>876C6EC8-D8AA-4229-86FA-DB9D2F6CB766</key>
 		<dict>
@@ -468,19 +388,19 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>ypos</key>
 			<integer>30</integer>
 		</dict>
-		<key>98D7394B-BF5A-4627-93F0-0DE8C4DE7817</key>
+		<key>9A6EF034-90F0-43E0-BB75-CF076943AEAA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>630</integer>
-			<key>ypos</key>
-			<integer>320</integer>
-		</dict>
-		<key>A7C31E04-6B52-4F0A-9D18-2E5B8C4F71A6</key>
-		<dict>
-			<key>xpos</key>
-			<integer>120</integer>
-			<key>ypos</key>
 			<integer>230</integer>
+			<key>ypos</key>
+			<integer>80</integer>
+		</dict>
+		<key>A9DAF2A8-21D8-4158-AC94-E27F1767958F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
+			<key>ypos</key>
+			<integer>20</integer>
 		</dict>
 		<key>B5AF8CB4-58E8-4E8F-849B-3682551891A6</key>
 		<dict>
@@ -496,12 +416,12 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>ypos</key>
 			<integer>180</integer>
 		</dict>
-		<key>F19D6E27-8A40-4C3B-B715-6D0E2A9C8B34</key>
+		<key>DFA97AE9-3379-4F26-A8DF-651ADBF2A14D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>330</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>230</integer>
+			<integer>80</integer>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
@@ -548,44 +468,16 @@ osascript -e 'on run argv' -e 'tell application id "com.runningwithcrayons.Alfre
 			<key>variable</key>
 			<string>skin_tone</string>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<string>grid</string>
-				<key>pairs</key>
-				<array>
-					<array>
-						<string>Grid</string>
-						<string>grid</string>
-					</array>
-					<array>
-						<string>List</string>
-						<string>list</string>
-					</array>
-				</array>
-			</dict>
-			<key>description</key>
-			<string>The double-tap hotkey opens this view. The emoji keyword always opens the list.</string>
-			<key>label</key>
-			<string>Hotkey opens</string>
-			<key>type</key>
-			<string>popupbutton</string>
-			<key>variable</key>
-			<string>view</string>
-		</dict>
 	</array>
 	<key>variables</key>
 	<dict>
 		<key>skin_tone</key>
 		<string>none</string>
-		<key>view</key>
-		<string>grid</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.1.1</string>
+	<string>2.0.0</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

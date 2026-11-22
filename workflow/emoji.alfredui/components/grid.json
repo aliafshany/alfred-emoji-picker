@@ -1,0 +1,62 @@
+{
+ "constraints": {
+  "region": "centre"
+ },
+ "id": "grid",
+ "type": "dataview",
+ "cols": 10,
+ "spacing": 4,
+ "behaviour": {
+  "selection": {
+   "wrap": "vertical"
+  }
+ },
+ "events": [
+  {
+   "triggers": "changed",
+   "action": {
+    "type": "script",
+    "src": "grid",
+    "args": [
+     "name",
+     "",
+     "{value:self.selected.emoji}",
+     "{value:self.selected.name}"
+    ],
+    "async": true
+   }
+  }
+ ],
+ "cell": {
+  "height": 56,
+  "init": {
+   "cell.background": null
+  },
+  "selected": {
+   "cell.background": "alfredSelectedResultBackgroundColor"
+  },
+  "root": {
+   "id": "cell",
+   "type": "view",
+   "layout": "border",
+   "cornerradius": 10,
+   "components": [
+    {
+     "constraints": {
+      "region": "centre"
+     },
+     "id": "glyph",
+     "type": "label",
+     "textalign": "centre",
+     "font": {
+      "size": 32
+     }
+    }
+   ]
+  }
+ },
+ "data": {
+  "type": "basic",
+  "src": []
+ }
+}
