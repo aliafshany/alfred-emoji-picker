@@ -2,7 +2,7 @@
 
 Alfred workflow to search Unicode emoji and paste or copy the one you want. It opens a native Alfred UI grid: your pinned and recent emoji on top, then every emoji, with Tab stacking several before you paste. It learns which ones you use.
 
-> **Version 2 needs Alfred 6.** It is built on Alfred UI, which Alfred 5 doesn't have. On Alfred 5, use [v1.1.0](https://github.com/aliafshany/alfred-emoji-picker/releases/tag/v1.1.0).
+> **Version 2 needs Alfred 6.** It is built on Alfred UI, which Alfred 5 doesn't have. On Alfred 5, use [v1.1.1](https://github.com/aliafshany/alfred-emoji-picker/releases/tag/v1.1.1).
 
 ## Install
 
